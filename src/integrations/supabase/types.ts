@@ -261,6 +261,132 @@ export type Database = {
           created_at?: string;
         };
       };
+      content_strategy_items: {
+        Row: {
+          id: string;
+          title: string;
+          description: string | null;
+          content_type: string;
+          target_stage: number;
+          status: string;
+          platform: string | null;
+          scheduled_date: string | null;
+          posted_date: string | null;
+          sort_order: number;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          description?: string | null;
+          content_type: string;
+          target_stage: number;
+          status?: string;
+          platform?: string | null;
+          scheduled_date?: string | null;
+          posted_date?: string | null;
+          sort_order?: number;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          description?: string | null;
+          content_type?: string;
+          target_stage?: number;
+          status?: string;
+          platform?: string | null;
+          scheduled_date?: string | null;
+          posted_date?: string | null;
+          sort_order?: number;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      social_platforms: {
+        Row: {
+          id: string;
+          platform_name: string;
+          account_handle: string;
+          is_connected: boolean | null;
+          followers_count: number | null;
+          access_token: string | null;
+          refresh_token: string | null;
+          token_expires_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          platform_name: string;
+          account_handle: string;
+          is_connected?: boolean | null;
+          followers_count?: number | null;
+          access_token?: string | null;
+          refresh_token?: string | null;
+          token_expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          platform_name?: string;
+          account_handle?: string;
+          is_connected?: boolean | null;
+          followers_count?: number | null;
+          access_token?: string | null;
+          refresh_token?: string | null;
+          token_expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      social_post_metrics: {
+        Row: {
+          id: string;
+          strategy_item_id: string;
+          platform_id: string;
+          impressions: number | null;
+          reach: number | null;
+          likes: number | null;
+          comments: number | null;
+          shares: number | null;
+          clicks: number | null;
+          engagement_rate: number | null;
+          fetched_at: string;
+        };
+        Insert: {
+          id?: string;
+          strategy_item_id: string;
+          platform_id: string;
+          impressions?: number | null;
+          reach?: number | null;
+          likes?: number | null;
+          comments?: number | null;
+          shares?: number | null;
+          clicks?: number | null;
+          engagement_rate?: number | null;
+          fetched_at?: string;
+        };
+        Update: {
+          id?: string;
+          strategy_item_id?: string;
+          platform_id?: string;
+          impressions?: number | null;
+          reach?: number | null;
+          likes?: number | null;
+          comments?: number | null;
+          shares?: number | null;
+          clicks?: number | null;
+          engagement_rate?: number | null;
+          fetched_at?: string;
+        };
+      };
     };
     Views: {
       stage_pipeline: {

@@ -5,6 +5,8 @@ import { NavRail } from "@/components/dashboard/NavRail";
 import { PipelineBar } from "@/components/dashboard/PipelineBar";
 import { StageCards } from "@/components/dashboard/StageCards";
 import { ContentTable } from "@/components/dashboard/ContentTable";
+import { ContentStrategyBoard } from "@/components/dashboard/ContentStrategyBoard";
+import { SocialMetricsPanel } from "@/components/dashboard/SocialMetricsPanel";
 import { ICPPanel } from "@/components/dashboard/ICPPanel";
 import { LeadMagnetTracker } from "@/components/dashboard/LeadMagnetTracker";
 import { useStages } from "@/hooks/use-stages";
@@ -13,6 +15,8 @@ import { useICPMetrics } from "@/hooks/use-icp-metrics";
 import { useLeadMagnetData } from "@/hooks/use-lead-magnet";
 import { AddContactSheet } from "@/components/forms/AddContactSheet";
 import { ContentFormSheet, type ContentEditData } from "@/components/forms/ContentFormSheet";
+import { AddContentIdeaSheet } from "@/components/forms/AddContentIdeaSheet";
+import { ConnectPlatformSheet } from "@/components/forms/ConnectPlatformSheet";
 import { UpdateLeadMagnetSheet } from "@/components/forms/UpdateLeadMagnetSheet";
 import { MoveStageDialog, type MoveStageTarget } from "@/components/forms/MoveStageDialog";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,6 +35,9 @@ const Index = () => {
   // Content edit state
   const [editContent, setEditContent] = useState<ContentEditData | null>(null);
   const [editContentOpen, setEditContentOpen] = useState(false);
+
+  // Content strategy filter
+  const [strategyStageFilter, setStrategyStageFilter] = useState<number | null>(null);
 
   // Data hooks
   const { data: stages, isLoading: stagesLoading, error: stagesError } = useStages(dateRange);
@@ -144,9 +151,11 @@ const Index = () => {
               )}
 
               {/* Action buttons */}
-              <div className="px-6 py-2 flex gap-2">
+              <div className="px-6 py-2 flex gap-2 flex-wrap">
                 <AddContactSheet />
                 <ContentFormSheet />
+                <AddContentIdeaSheet />
+                <ConnectPlatformSheet />
                 <UpdateLeadMagnetSheet
                   currentData={leadMagnet ? {
                     betaSignups: leadMagnet.betaSignups,
@@ -155,6 +164,15 @@ const Index = () => {
                   } : undefined}
                 />
               </div>
+
+              {/* Content Strategy Board */}
+              <ContentStrategyBoard
+                stageFilter={strategyStageFilter}
+                onStageFilterChange={setStrategyStageFilter}
+              />
+
+              {/* Social Platform Metrics */}
+              <SocialMetricsPanel />
 
               {content && (
                 <ContentTable

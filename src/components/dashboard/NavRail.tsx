@@ -6,12 +6,14 @@ import {
   Target,
   Magnet,
   Settings,
+  Kanban,
 } from "lucide-react";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", id: "dashboard" },
   { icon: BarChart3, label: "Pipeline", id: "pipeline" },
   { icon: FileText, label: "Content", id: "content" },
+  { icon: Kanban, label: "Strategy", id: "content-strategy" },
   { icon: Target, label: "ICP Fit", id: "icp" },
   { icon: Magnet, label: "Lead Magnets", id: "magnets" },
   { icon: Settings, label: "Settings", id: "settings" },

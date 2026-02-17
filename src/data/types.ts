@@ -53,3 +53,50 @@ export const STAGE_META: Record<AwarenessStage, { label: string; color: string }
   product: { label: "Product Aware", color: "bg-stage-product" },
   most: { label: "Most Aware", color: "bg-stage-most" },
 };
+
+// Content Strategy types
+export type ContentStatus = "idea" | "in_progress" | "scheduled" | "posted";
+
+export const CONTENT_STATUS_META: Record<ContentStatus, { label: string; color: string }> = {
+  idea: { label: "Idea", color: "text-muted-foreground" },
+  in_progress: { label: "In Progress", color: "text-stage-problem" },
+  scheduled: { label: "Scheduled", color: "text-stage-product" },
+  posted: { label: "Posted", color: "text-stage-most" },
+};
+
+export type SocialPlatformName = "LinkedIn" | "Twitter" | "Facebook" | "Instagram" | "YouTube" | "TikTok";
+
+export interface ContentStrategyItem {
+  id: string;
+  title: string;
+  description: string | null;
+  content_type: string;
+  target_stage: number;
+  status: ContentStatus;
+  platform: string | null;
+  scheduled_date: string | null;
+  posted_date: string | null;
+  sort_order: number;
+  notes: string | null;
+}
+
+export interface SocialPlatform {
+  id: string;
+  platform_name: SocialPlatformName;
+  account_handle: string;
+  is_connected: boolean;
+  followers_count: number;
+}
+
+export interface SocialPostMetric {
+  id: string;
+  strategy_item_id: string;
+  platform_id: string;
+  impressions: number;
+  reach: number;
+  likes: number;
+  comments: number;
+  shares: number;
+  clicks: number;
+  engagement_rate: number;
+}
