@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import type { StageData, ContentRow, ICPMetric, LeadMagnetData, AwarenessStage } from "@/data/types";
 
@@ -17,6 +17,7 @@ const STAGE_ID_MAP: Record<number, AwarenessStage> = {
 export function useStagePipeline() {
   return useQuery({
     queryKey: ["stage_pipeline"],
+    enabled: supabaseConfigured,
     queryFn: async (): Promise<StageData[]> => {
       const { data: pipeline, error: pipeErr } = await supabase
         .from("stage_pipeline")
@@ -61,6 +62,7 @@ export function useStagePipeline() {
 export function useContentPerformance() {
   return useQuery({
     queryKey: ["content_performance"],
+    enabled: supabaseConfigured,
     queryFn: async (): Promise<ContentRow[]> => {
       const { data, error } = await supabase
         .from("content_performance")
@@ -85,6 +87,7 @@ export function useContentPerformance() {
 export function useICPMetrics() {
   return useQuery({
     queryKey: ["icp_metrics"],
+    enabled: supabaseConfigured,
     queryFn: async (): Promise<ICPMetric[]> => {
       const { data, error } = await supabase
         .from("icp_metrics" as any)
@@ -108,6 +111,7 @@ export function useICPMetrics() {
 export function useLeadMagnetMetrics() {
   return useQuery({
     queryKey: ["lead_magnet_metrics"],
+    enabled: supabaseConfigured,
     queryFn: async (): Promise<LeadMagnetData> => {
       const { data, error } = await supabase
         .from("lead_magnet_metrics" as any)
