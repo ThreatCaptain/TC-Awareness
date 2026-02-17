@@ -1,6 +1,7 @@
 export type AwarenessStage = "unaware" | "problem" | "solution" | "product" | "most";
 
 export interface Contact {
+  id?: string;
   name: string;
   company: string;
   stage: AwarenessStage;

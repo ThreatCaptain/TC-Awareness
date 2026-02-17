@@ -1,5 +1,5 @@
 import { StageData, STAGE_META, AwarenessStage } from "@/data/types";
-import { TrendingUp, TrendingDown, Eye, AlertTriangle, Lightbulb, Package, Star } from "lucide-react";
+import { TrendingUp, TrendingDown, Eye, AlertTriangle, Lightbulb, Package, Star, ArrowRight } from "lucide-react";
 
 const stageIcons: Record<AwarenessStage, React.ElementType> = {
   unaware: Eye,
@@ -9,12 +9,21 @@ const stageIcons: Record<AwarenessStage, React.ElementType> = {
   most: Star,
 };
 
+const STAGE_NUMBERS: Record<AwarenessStage, number> = {
+  unaware: 1,
+  problem: 2,
+  solution: 3,
+  product: 4,
+  most: 5,
+};
+
 interface StageCardsProps {
   stages: StageData[];
   highlightedStage: AwarenessStage | null;
+  onMoveStage?: (contactId: string, contactName: string, stageNumber: number) => void;
 }
 
-export function StageCards({ stages, highlightedStage }: StageCardsProps) {
+export function StageCards({ stages, highlightedStage, onMoveStage }: StageCardsProps) {
   return (
     <section className="px-6 py-2">
       <h2 className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-3">
@@ -60,11 +69,20 @@ export function StageCards({ stages, highlightedStage }: StageCardsProps) {
 
               <div className="border-t border-border pt-2 mt-2 space-y-1.5">
                 {stage.contacts.slice(0, 3).map((c, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <div className="truncate">
+                  <div key={c.id ?? i} className="flex items-center justify-between gap-1">
+                    <div className="truncate flex-1">
                       <span className="text-[11px] text-foreground font-medium">{c.name}</span>
                       <span className="text-[10px] text-muted-foreground ml-1">· {c.company}</span>
                     </div>
+                    {onMoveStage && c.id && (
+                      <button
+                        onClick={() => onMoveStage(c.id!, c.name, STAGE_NUMBERS[stage.id])}
+                        className="shrink-0 p-0.5 rounded hover:bg-muted transition-colors"
+                        title="Move stage"
+                      >
+                        <ArrowRight size={10} className="text-muted-foreground hover:text-primary" />
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
