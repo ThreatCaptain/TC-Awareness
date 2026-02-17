@@ -6,9 +6,10 @@ type SortKey = keyof ContentRow;
 
 interface ContentTableProps {
   rows: ContentRow[];
+  onRowClick?: (contentId: string) => void;
 }
 
-export function ContentTable({ rows }: ContentTableProps) {
+export function ContentTable({ rows, onRowClick }: ContentTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("views");
   const [sortAsc, setSortAsc] = useState(false);
 
@@ -63,7 +64,11 @@ export function ContentTable({ rows }: ContentTableProps) {
           </thead>
           <tbody>
             {sorted.map(row => (
-              <tr key={row.id} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+              <tr
+                key={row.id}
+                onClick={() => onRowClick?.(row.id)}
+                className={`border-b border-border last:border-0 hover:bg-muted/20 transition-colors ${onRowClick ? "cursor-pointer" : ""}`}
+              >
                 <td className="px-3 py-2 text-foreground max-w-[240px] truncate">{row.title}</td>
                 <td className="px-3 py-2 text-muted-foreground">{row.type}</td>
                 <td className="px-3 py-2">
