@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { DateRange, AwarenessStage } from "@/data/types";
+import { AwarenessStage } from "@/data/types";
 import { getDashboardData } from "@/data/dashboard-data";
+import { useStagePipeline, useContentPerformance, useICPMetrics, useLeadMagnetMetrics } from "@/hooks/use-dashboard-data";
 import { TopBar } from "@/components/dashboard/TopBar";
 import { NavRail } from "@/components/dashboard/NavRail";
 import { PipelineBar } from "@/components/dashboard/PipelineBar";
@@ -10,11 +11,21 @@ import { ICPPanel } from "@/components/dashboard/ICPPanel";
 import { LeadMagnetTracker } from "@/components/dashboard/LeadMagnetTracker";
 
 const Index = () => {
-  const [dateRange, setDateRange] = useState<DateRange>("month");
+  const [dateRange, setDateRange] = useState<"week" | "month" | "quarter" | "all">("month");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [highlightedStage, setHighlightedStage] = useState<AwarenessStage | null>(null);
 
-  const { stages, content, icpMetrics, leadMagnet } = getDashboardData(dateRange);
+  const fallback = getDashboardData(dateRange);
+
+  const { data: dbStages } = useStagePipeline();
+  const { data: dbContent } = useContentPerformance();
+  const { data: dbICP } = useICPMetrics();
+  const { data: dbLeadMagnet } = useLeadMagnetMetrics();
+
+  const stages = dbStages?.length ? dbStages : fallback.stages;
+  const content = dbContent?.length ? dbContent : fallback.content;
+  const icpMetrics = dbICP?.length ? dbICP : fallback.icpMetrics;
+  const leadMagnet = dbLeadMagnet?.betaSignups !== undefined && dbLeadMagnet.betaSignups > 0 ? dbLeadMagnet : fallback.leadMagnet;
 
   useEffect(() => {
     document.documentElement.classList.remove("dark", "light");
